@@ -1,0 +1,144 @@
+<div class="w-full h-full flex flex-col rounded shadow-md pointer bg-white">
+  <!-- heading -->
+  <div
+    class="w-full h-fit px-2 py-1 bg-sky-100 flex justify-between items-center"
+    [ngClass]="{'!bg-slate-200': !item.isActive}"
+  >
+    <!-- status -->
+    <div class="w-fit flex items-center gap-1 min-h-[47px]">
+      <i
+        *ngIf="item.isActive"
+        class="bi bi-check2 text-blue-400 text-[25px]"
+      ></i>
+      <i
+        *ngIf="!item.isActive"
+        class="bi bi-check2-all text-blue-400 text-[25px]"
+      ></i>
+      <span class="text-gray-500" [ngClass]="{'text-gray-800': item.isActive}"
+        >{{item.isActive? 'شروع': 'اتمام'}} مناقصه</span
+      >
+    </div>
+    <button
+      mat-icon-button
+      *ngIf="routeBaseUrl=='admin'"
+      (click)="$event.stopPropagation()"
+      [matMenuTriggerFor]="menu"
+      color="primary"
+    >
+      <i class="bi bi-three-dots-vertical text-[20px]"></i>
+    </button>
+    <mat-menu #menu="matMenu" class="w-fit flex justify-center p-1">
+      <button
+        (click)="openTenderDialog()"
+        matTooltip="ویرایش اطلاعات"
+        mat-icon-button
+        color="primary"
+      >
+        <i class="bi bi-pencil-fill text-[20px]"></i>
+      </button>
+      <button
+        (click)="delete()"
+        matTooltip="حذف مناقصه"
+        mat-icon-button
+        color="warn"
+      >
+        <i class="bi bi-trash-fill text-[20px]"></i>
+      </button>
+    </mat-menu>
+  </div>
+
+  <!-- body -->
+  <div
+    matRipple
+    [routerLink]="['/', routeBaseUrl,'detail',item.id]"
+    class="w-full h-full py-3 pt-5 px-4 bg-white cursor-pointer text-gray-500 text-xs"
+    [ngClass]="{'!bg-slate-50': !item.isActive}"
+  >
+    <p class="text-base text-black my-1 ellipsis-my-text-in-one-line">
+      {{item.title}}
+    </p>
+
+    <div class="w-full flex flex-col gap-5 mt-6 justify-between">
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-calendar-check text-blue-900 text-sm ml-1"></i>
+          تاریخ شروع:
+        </span>
+        <span class="">{{item.startOn}}</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-calendar-x text-blue-900 text-sm ml-1"></i>
+          تاریخ پایان:
+        </span>
+        <span class="">{{item.finishOn}}</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i
+            class="bi bi-arrow-down-square-fill text-blue-900 text-sm ml-1"
+          ></i>
+          حداقل قیمت:
+        </span>
+        <span class="">{{item.minPrice | number:'1.0'}} ریال</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-arrow-up-square-fill text-blue-900 text-sm ml-1"></i>
+          حداکثر قیمت:
+        </span>
+        <span class="">{{item.maxPrice | number:'1.0'}} ریال</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-people-fill text-blue-900 text-sm ml-1"></i>
+          تعداد شرکت کنندگان:
+        </span>
+        <span class="">{{item.contributors.length}} نفر</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-sort-down text-blue-900 text-sm ml-1"></i>
+          پایین ترین پیشنهاد:
+        </span>
+        <span *ngIf="item.contributors.length>0">
+          {{item.contributors | minOfObjects:'suggestedPrice'| number:'1.0'}}
+          ریال
+        </span>
+        <span *ngIf="item.contributors.length==0"> فاقد پیشنهاد</span>
+      </div>
+      <div class="w-full flex justify-between">
+        <span class="">
+          <i class="bi bi-person-arms-up text-blue-900 text-sm ml-1"></i>
+          برنده نهایی:
+        </span>
+        <span
+          (click)="$event.stopPropagation()"
+          class="text-blue-500 cursor-pointer text-xs hover:text-red-500"
+          [ngClass]="{'!hover:text-gray-500': item.isActive,'!text-gray-500': item.isActive}"
+          >{{!item.isActive? item.chosenContractor!.fullname:'درحال
+          بررسی'}}</span
+        >
+      </div>
+    </div>
+
+    <div class="w-full flex justify-center mt-5">
+      <button
+        (click)="$event.stopPropagation();openContributeDialog()"
+        mat-raised-button
+        class=""
+        *ngIf="item.isActive && routeBaseUrl!=='admin' && !isContributed()"
+        color="primary"
+      >
+        مشارکت در مناقصه
+      </button>
+      <div
+        *ngIf="item.isActive && routeBaseUrl!=='admin' && isContributed()"
+        class="w-full h-full py-[6px] bg-slate-50 flex justify-center items-center border-2 border-blue-800 rounded-md"
+      >
+        <i class="bi bi-check2 mt-1 text-[18px]"></i>
+        <p class="!m-0">پیشنهاد شما ثبت شده است.</p>
+      </div>
+    </div>
+  </div>
+</div>

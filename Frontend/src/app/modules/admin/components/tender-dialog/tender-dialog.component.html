@@ -1,0 +1,93 @@
+<div class="w-full h-full p-3 sm:p-6 md:p-8 bg-white">
+  <div class="w-full h-full flex flex-col justify-between">
+    <form [formGroup]="tenderForm" (submit)="save()">
+      <h3
+        class="bg-white !m-0 pb-3 flex jutify-center font-bold items-center gap-2"
+      >
+        <i
+          class="bi bi-plus-square-fill text-blue-700 text-lg flex items-center"
+        ></i>
+        <span class="mt-1">{{title}}</span>
+      </h3>
+      <mat-dialog-content
+        ><mat-form-field class="w-full">
+          <mat-label>عنوان پروژه</mat-label>
+          <input matInput formControlName="title" placeholder="عنوان پروژه" />
+        </mat-form-field>
+        <div class="w-full h-full grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+          <mat-form-field>
+            <mat-label>تاریخ شروع مناقصه</mat-label>
+            <input
+              matInput
+              formControlName="startOn"
+              [matDatepicker]="picker"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>تاریخ پایان مناقصه</mat-label>
+            <input
+              matInput
+              formControlName="finishOn"
+              [matDatepicker]="picker1"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="w-full">
+            <mat-label>حداقل قیمت</mat-label>
+            <input
+              matInput
+              formControlName="minPrice"
+              type="number"
+              placeholder="حداقل قیمت"
+            />
+          </mat-form-field>
+          <mat-form-field class="w-full">
+            <mat-label>حداکثر قیمت</mat-label>
+            <input
+              matInput
+              formControlName="maxPrice"
+              type="number"
+              placeholder="حداکثر قیمت"
+            />
+          </mat-form-field>
+        </div>
+        <mat-form-field class="w-full">
+          <mat-label>توضیحات</mat-label>
+          <textarea
+            matInput
+            formControlName="comment"
+            placeholder="توضیحات"
+          ></textarea>
+        </mat-form-field>
+      </mat-dialog-content>
+      <div class="w-full h-fit pt-5 flex gap-3 justify-end items-center">
+        <button
+          mat-raised-button
+          mat-dialog-close
+          type="button"
+          class="flex gap-2 items-center"
+        >
+          <span> انصراف</span>
+        </button>
+        <button
+          mat-raised-button
+          [disabled]="tenderForm.invalid"
+          type="submit"
+          class="flex items-center justify-center gap-2"
+          color="primary"
+        >
+          ذخیره
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

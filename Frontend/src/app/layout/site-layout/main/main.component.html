@@ -1,0 +1,34 @@
+<mat-drawer-container
+  class="w-[full] h-[calc(100vh-64px)] !bg-slate-100 overflow-hidden"
+  [hasBackdrop]="true"
+>
+  <mat-drawer
+    (click)="closeSidebar()"
+    [mode]="'over'"
+    class="w-[280px] max-w-[350px] h-[calc(100vh-64px)] !bg-slate-200"
+    #sidenav
+  >
+    <app-side-bar-item
+      [routerLink]="[routeBaseUrl,item.route]"
+      *ngFor="let item of tendersList"
+      [title]="item.title"
+    ></app-side-bar-item>
+
+    <!-- admin's buttons -->
+    <ng-container *ngIf="routeBaseUrl=='admin'">
+      <app-side-bar-item
+        title="تعریف مناقصه جدید"
+        (click)="openTenderDialog()"
+      ></app-side-bar-item>
+      <app-side-bar-item
+        [routerLink]="[routeBaseUrl,item.route]"
+        *ngFor="let item of adminBtns"
+        [title]="item.title"
+      ></app-side-bar-item>
+    </ng-container>
+  </mat-drawer>
+
+  <mat-drawer-content class="w-full h-full">
+    <router-outlet class="w-full h-full"></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

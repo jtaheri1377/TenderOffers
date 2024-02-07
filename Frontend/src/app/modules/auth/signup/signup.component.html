@@ -1,0 +1,92 @@
+<div class="w-full h-full text-base !font-bold p-4">
+  <form
+    [formGroup]="signupForm"
+    class="w-full h-full flex flex-col justify-center items-center"
+    (submit)="signup()"
+  >
+    <div
+      class="w-full h-fit bg-white max-w-[350px] border border-2 border-t-indigo-400 border-b-indigo-400 px-10 py-10 flex flex-col rounded shadow-lg"
+    >
+      <h3 class="!m-0 pb-3 w-full text-center">
+        <i
+          class="bi bi-person-plus-fill text-[25px] ml-[5px] text-blue-800"
+        ></i>
+        <span class="font-semibold text[26px]">ثبت نام پیمانکاران</span>
+      </h3>
+      <hr class="w-full h-1 bg-white mb-3" />
+      <mat-form-field>
+        <mat-label
+          >نام و نام خانوادگی
+          <i class="bi bi-person text-md"></i>
+        </mat-label>
+        <input
+          type="text"
+          formControlName="fullname"
+          matInput
+          placeholder="نام و نام خانوادگی"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label
+          >نام کاربری
+          <i class="bi bi-person-circle text-md"></i>
+        </mat-label>
+        <input
+          type="text"
+          formControlName="username"
+          matInput
+          placeholder="نام کاربری"
+        />
+        <mat-hint class="text-gray-500"
+          >نام کاربری قابل تغییر نمی باشد!</mat-hint
+        >
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <mat-label>
+          کلمه عبور
+          <i class="bi bi-lock text-md"></i>
+        </mat-label>
+        <input
+          type="password"
+          formControlName="password"
+          matInput
+          placeholder="کلمه عبور"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label
+          >بیوگرافی
+          <i class="bi bi-receipt text-md"></i>
+        </mat-label>
+        <textarea
+          type="text"
+          formControlName="comment"
+          matInput
+          placeholder="بیوگرافی"
+        ></textarea>
+      </mat-form-field>
+      <div class="w-full h-fit flex gap-3 justify-end items-center">
+        <button
+          mat-raised-button
+          type="submit
+        "
+          class="w-full text-medium"
+          color="primary"
+        >
+          <div class="w-full flex items-center !gap-1">
+            <span>ثبت نام</span>
+
+          </div>
+        </button>
+      </div>
+      <div class="w-full text-sm mt-2">
+        <a routerLink="../login" class="text-blue-800 flex items-center gap-2">
+          <i
+            class="bi bi-box-arrow-in-left text-base flex items-center !m-0"
+          ></i>
+          ورود به سامانه
+        </a>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,128 @@
+<div class="w-full h-fit px-2 sm:!px-5 md:!px-7 lg:!px-9">
+  <div class="pt-3">
+    <app-alert
+      class="!mt-3"
+      *ngIf="!item.isActive"
+      [alert]="{title:'اتمام مناقصه!',
+     message: 'آگهی منقضی شده و مناقصه پایان یافته است.'}"
+    ></app-alert>
+
+    <div
+      class="w-full bg-white shadow-md p-7"
+      [ngClass]="{'!bg-red-50': !item.isActive,
+       '!border-2': !item.isActive,
+       '!border-red-100': !item.isActive}"
+    >
+      <!-- titles -->
+      <div class="w-full mb-3">
+        <p class="text-base font-bold">
+          <i class="bi bi-square-fill text-sm text-gray-700"></i>
+          عنوان پروژه: {{item.title}}
+        </p>
+        <p class="whitespace-pre-line text-justify text-gray-500">
+          <i class="bi bi-blockquote-left"></i>
+          {{item.comment}}
+        </p>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- properties -->
+      <div class="w-full my-4 grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-6">
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i class="bi bi-calendar-check text-blue-900 text-sm ml-1"></i>
+            تاریخ شروع:
+          </span>
+          <span class="text-gray-500 text-sm">{{item.startOn}}</span>
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i class="bi bi-calendar-x text-blue-900 text-sm ml-1"></i>
+            تاریخ پایان:
+          </span>
+          <span class="text-gray-500 text-sm">{{item.finishOn}}</span>
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i
+              class="bi bi-arrow-down-square-fill text-blue-900 text-sm ml-1"
+            ></i>
+            حداقل قیمت:
+          </span>
+          <span class="text-gray-500 text-sm"
+            >{{item.minPrice | number:'1.0'}} ریال</span
+          >
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i
+              class="bi bi-arrow-up-square-fill text-blue-900 text-sm ml-1"
+            ></i>
+            حداکثر قیمت:
+          </span>
+          <span class="text-gray-500 text-sm">{{item.maxPrice}} ریال</span>
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i class="bi bi-people-fill text-blue-900 text-sm ml-1"></i>
+            تعداد شرکت کنندگان:
+          </span>
+          <span class="text-gray-500 text-sm"
+            >{{item.contributors.length}} نفر</span
+          >
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i class="bi bi-sort-down text-blue-900 text-sm ml-1"></i>
+            پایین ترین پیشنهاد:
+          </span>
+          <span *ngIf="item" class="text-gray-500 text-sm">
+            <span *ngIf="item.contributors.length>0">
+              {{item.contributors | minOfObjects:'suggestedPrice'|
+              number:'1.0'}} ریال
+            </span>
+            <span *ngIf="item.contributors.length==0"> فاقد پیشنهاد</span>
+          </span>
+        </div>
+        <div class="w-full flex justify-start gap-2">
+          <span class="text-gray-500">
+            <i class="bi bi-person-arms-up text-blue-900 text-sm ml-1"></i>
+            برنده نهایی:
+          </span>
+          <span
+            class="text-blue-500 cursor-pointer text-sm hover:text-red-500"
+            [ngClass]="{'!hover:text-gray-500': item.isActive,'!text-gray-500': item.isActive}"
+            >{{item.isActive? 'درحال
+            بررسی':item.chosenContractor.fullname}}</span
+          >
+        </div>
+      </div>
+      <div class="w-full flex justify-center mt-4" *ngIf="item.isActive">
+        <button
+          mat-raised-button
+          class=""
+          *ngIf="item.isActive && IsUserContractor() && !isContributed()"
+          color="primary"
+          (click)="openContributeDialog()"
+        >
+          مشارکت در مناقصه
+        </button>
+        <div
+          *ngIf="item.isActive && IsUserContractor() && isContributed()"
+          class="w-full h-full py-[6px] bg-slate-50 flex justify-center items-center border-2 border-blue-800 rounded-md"
+        >
+          <i class="bi bi-check2 mt-1 text-[18px]"></i>
+          <p class="!m-0">پیشنهاد شما ثبت شده است.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- contributors List -->
+    <div class="!py-3"></div>
+    <app-contributors-list
+      [tenderItem]="item"
+      [items]="item.contributors"
+    ></app-contributors-list>
+  </div>
+</div>

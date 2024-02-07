@@ -1,0 +1,54 @@
+<mat-toolbar class="flex justify-between" color="primary">
+  <button
+    mat-icon-button
+    *ngIf="isAuthorized"
+    matTooltip="منو"
+    (click)="toggleDrawer()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="!m-auto">مناقصات شهرداری</span>
+  <ng-container *ngIf="isAuthorized">
+    <button
+      mat-icon-button
+      *ngIf="isAuthorized"
+      matTooltip="پروفایل"
+      [matMenuTriggerFor]="profile"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <!-- profile Box -->
+
+    <mat-menu class="w-56" #profile="matMenu">
+      <div matRipple class="w-full h-fit">
+        <div class="w-full h-fit p-2 py-4 flex justify-center items-center">
+          <i class="bi bi-person-circle text-[60px] text-gray-500"></i>
+        </div>
+
+        <div
+          class="w-full h-fit px-4 py-1 pt-3 text-gray-500 flex-col font-bold"
+        >
+          <p class="flex justify-start items-center gap-1">
+            <i class="bi bi-person-fill flex justify-center items-center"> </i>
+            <span> {{user!.fullname}}</span>
+          </p>
+          <p class="flex justify-start text-[12px] items-center gap-1">
+            <i class="bi bi-award-fill flex justify-center items-center"> </i>
+            <span> {{userTitle}}</span>
+          </p>
+        </div>
+      </div>
+      <hr class="w-[90%] h-[1px] bg-gray-100 !m-auto" />
+      <button disabled="true" mat-menu-item class="font-semibold">
+        <i class="bi bi-lock-fill text-gray-500 gap-3 pl-2"> </i>
+        <span>تغییر رمز کاربری</span>
+      </button>
+      <button (click)="logout()" mat-menu-item class="font-semibold">
+        <i class="bi bi-power text-gray-500 gap-3 pl-2 text-lg font-bold"> </i>
+        <span>خروج از حساب</span>
+      </button>
+    </mat-menu>
+  </ng-container>
+</mat-toolbar>

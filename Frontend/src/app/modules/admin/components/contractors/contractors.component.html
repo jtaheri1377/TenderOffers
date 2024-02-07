@@ -1,0 +1,27 @@
+<div class="w-full h-fit p-3 sm:p-8 md:p-10">
+  <div class="w-full h-fit rounded-md flex flex-col">
+    <div class="">
+      <div class="w-full h-fit">
+        <h2
+          class="font-bold bg-gray-200 rounded-t-md text-medium !m-0 p-3 px-6 flex justify-between"
+        >
+          <span class="flex gap-1">
+            <i class="bi bi-grid-3x3-gap-fill ml-1 flex items-center"></i>
+            <span class="mt-1"> {{'لیست پیمانکاران '}}</span>
+          </span>
+          <span class="text-sm !my-auto"> {{contractors.length}} :تعداد</span>
+        </h2>
+      </div>
+      <div
+        class="w-full h-fit shadow-md border bg-white py-3 sm:p-2 md:p-4 rounded-b-lg gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 justify-center font-bold px-2"
+      >
+        <app-contractor
+          class="w-full h-full flex justify-center"
+          [item]="item"
+          *ngFor="let item of contractors"
+        ></app-contractor>
+      </div>
+      <app-empty *ngIf="contractors.length===0"></app-empty>
+    </div>
+  </div>
+</div>
